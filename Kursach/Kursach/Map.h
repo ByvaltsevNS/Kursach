@@ -1,7 +1,6 @@
 #pragma once
-#include <string>
-#define _USE_MATH_DEFINES
-#include <math.h>
+//#include <string>
+#include "ExprElem.h"
 class my_map;
 using namespace std;
 
@@ -32,3 +31,5 @@ public:
 my_map* create_bin_oper_map(); //Создание контейнера бинарных операций
 my_map* create_uno_oper_map(); //Создание контейнера унарных операций
 my_map* create_const_map(); //Создание контейнера констант
+my_map* create_bin_oper_identity(); //Создание контейнера уникальных идентификаторов бинарных операций
+my_map* create_uno_oper_identity();//Создание контейнера уникальных идентификаторов унарных операций

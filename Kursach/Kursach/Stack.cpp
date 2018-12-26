@@ -1,5 +1,5 @@
 #include "Stack.h"
-#include "Stack_Elem.h"
+//#include "Stack_Elem.h"
 
 //Деструктор элемента стэка
 stack_elem::~stack_elem() {
@@ -10,14 +10,23 @@ stack_elem::~stack_elem() {
 expr_elem* stack_elem::get_content() {
 	return content;
 }
+//Получение указателя на следующий элемент
+stack_elem* stack_elem::get_next() {
+	return next;
+}
 //Получение вершины стэка
 stack_elem* my_stack::get_head() {
 	return head;
+}
+//Получение размера стэка
+size_t my_stack::get_size() {
+	return size;
 }
 //Добавляет элемент в стэк
 void my_stack::push(stack_elem* node) {
 	node->next = head;
 	head = node;
+	size++;
 }
 //Удаляет верхний элемент из стэка
 void my_stack::pop() {
@@ -26,10 +35,12 @@ void my_stack::pop() {
 	else {
 		stack_elem* temp = head;
 		head = head->next;
-		temp = nullptr;
+		size--;
+		delete temp;
 	}
 }
 //Показывает пуст ли стэк
 bool my_stack::empty() {
 	return head == nullptr;
 }
+

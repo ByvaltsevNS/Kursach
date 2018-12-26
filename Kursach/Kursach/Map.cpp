@@ -1,8 +1,5 @@
 #include "Map.h"
 
-const int PREF = 1; //Префиксный
-const int POST = 2; //Постфиксный
-
 //Конструктор элемента контейнера
 map_elem::map_elem(string str, int var) {
 	key = str;
@@ -77,7 +74,6 @@ my_map* create_uno_oper_map() {
 	map->push(new map_elem("cos", PREF));
 	map->push(new map_elem("tg", PREF));
 	map->push(new map_elem("ctg", PREF));
-	map->push(new map_elem("!", POST));
 	map->push(new map_elem("ln", PREF));
 	map->push(new map_elem("log", PREF));
 	map->push(new map_elem("sqrt", PREF));
@@ -88,5 +84,28 @@ my_map* create_const_map() {
 	my_map* map = new my_map();
 	map->push(new map_elem("pi", 0));
 	map->push(new map_elem("e", 0));
+	return map;
+}
+//Создание контейнера уникальных идентификаторов бинарных операций
+my_map* create_bin_oper_identity() {
+	my_map* map = new my_map();
+	map->push(new map_elem("+", 0));
+	map->push(new map_elem("-", 1));
+	map->push(new map_elem("*", 2));
+	map->push(new map_elem("/", 3));
+	map->push(new map_elem("^", 4));
+	return map;
+}
+//Создание контейнера уникальных идентификаторов унарных операций
+my_map* create_uno_oper_identity() {
+	my_map* map = new my_map();
+	map->push(new map_elem("sin", 0));
+	map->push(new map_elem("cos", 1));
+	map->push(new map_elem("tg", 2));
+	map->push(new map_elem("ctg", 3));
+	map->push(new map_elem("ln", 4));
+	map->push(new map_elem("log", 5));
+	map->push(new map_elem("sqrt", 6));
+	map->push(new map_elem("-", 7));
 	return map;
 }
