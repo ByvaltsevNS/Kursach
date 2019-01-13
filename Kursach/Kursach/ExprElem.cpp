@@ -13,7 +13,6 @@ extern my_map* const_map = create_const_map(); //Создание контейнера унарных опе
 extern my_map* bin_oper_iden = create_bin_oper_identity(); //Создание контейнера уникальных идентификаторов бинарных операций
 extern my_map* uno_oper_iden = create_uno_oper_identity(); //Создание контейнера уникальных идентификаторов унарных операций
 
-
 using namespace std;
 
 //Добавление символа к содержанию
@@ -29,6 +28,11 @@ string expr_elem::get_content() {
 	return content;
 }
 //Первичная обработка выражения
+//Определяет в веденной строке операнды, операторы
+//стостоящие из одного символа
+//и "слова" - все, что состоит из буковок
+//На символы, не являющиеся точкой 
+///или оператором - кидает исключение
 vector <expr_elem>* first_oper_expr(string* input) {
 	vector <expr_elem>* expr = new vector <expr_elem>; //Создание выражения
 	string flag = "operator"; //Флаг
@@ -85,7 +89,6 @@ vector <expr_elem>* first_oper_expr(string* input) {
 	}
 	cout << endl;
 	cout << endl;
-	delete input;
 	return expr;
 }
 //Вторичная обработка инфиксного выражения

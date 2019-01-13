@@ -19,6 +19,7 @@ private:
 public:
 	//friend stack_elem; //Дружит с элементом стэка
 	expr_elem(string var1, string var2) : content(var1), status(var2) {}; //Конструкор элемента выражения
+	~expr_elem() {}; //Типо деструктор
 	void add(char ch); //Добавление символа в содержание
 	string get_status(); //Получение статуса элемента
 	string get_content(); //Получение содержания элемента

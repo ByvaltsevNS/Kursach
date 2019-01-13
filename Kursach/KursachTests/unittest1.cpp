@@ -2,6 +2,7 @@
 #include "CppUnitTest.h"
 #include "../Kursach/Stack.h"
 #include "../Kursach/Map.h"
+#include "../Kursach/ExprElem.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -73,6 +74,7 @@ namespace KursachTests
 			Assert::IsFalse(stack->empty());
 		}
 	};
+	//Тесты контейнера
 	TEST_CLASS(Map_Tests)
 	{
 	public:
@@ -129,6 +131,63 @@ namespace KursachTests
 			{
 				Assert::AreEqual("Element is missing!", e.what());
 			}
+		}
+	};
+	//Тесты функции первичной обработки выражения
+	TEST_CLASS(Expr_Elem_Class)
+	{
+	public:
+		string* input;
+		vector <expr_elem>*	true_after;
+		vector <expr_elem>*	real_after;
+		//Выделение памяти под вектор элементов выражений
+		TEST_METHOD_INITIALIZE(create_exprs)
+		{
+			input = new string;
+			true_after = new vector <expr_elem>;
+			real_after = new vector <expr_elem>;
+		}
+		//Освобождение памяти из под выражений
+		TEST_METHOD_CLEANUP(delete_exprs)
+		{
+			delete input;
+			delete true_after;
+			delete real_after;
+		}
+		//Тест некоторой входной строкой
+		TEST_METHOD(first_oper_expr_some_test_1)
+		{
+			*input = "cos(4.5*e)";
+			true_after->push_back(expr_elem("cos", "word"));
+			true_after->push_back(expr_elem("(", "operator"));
+			true_after->push_back(expr_elem("4.5", "operand"));
+			true_after->push_back(expr_elem("*", "operator"));
+			true_after->push_back(expr_elem("e", "word"));
+			true_after->push_back(expr_elem(")", "operator"));
+			real_after = first_oper_expr(input);
+			string var = "All right!";
+			if (true_after->size() != real_after->size())
+				var = "size mismatch";
+			else {
+				for (size_t i = 0; i < real_after->size(); i++)
+				{
+					if (true_after->at(i).get_content() != real_after->at(i).get_content()) {
+						var = "Error in content of ";
+						var.append(to_string(i));
+						var.append(" elem: ");
+						var.append(real_after->at(i).get_content());
+						break;
+					}
+					if (true_after->at(i).get_status() != real_after->at(i).get_status()) {
+						var = "Error in status of ";
+						var.append(to_string(i));
+						var.append(" elem: ");
+						var.append(real_after->at(i).get_status());
+						break;
+					}
+				}
+			}
+			Assert::AreEqual(var, string("All right!"));
 		}
 	};
 }
